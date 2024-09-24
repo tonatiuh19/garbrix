@@ -1,0 +1,13 @@
+.spinner-border {
+  margin-right: 5px;
+}
+
+.bi-check-circle-fill {
+  color: green;
+  margin-right: 5px;
+}
+
+#confetti-canvas {
+  display: block;
+  margin: 0 auto;
+}

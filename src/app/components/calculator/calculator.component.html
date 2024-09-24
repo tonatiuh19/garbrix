@@ -1,0 +1,268 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12 mb-5">
+      <h4>In which country are you based?</h4>
+      <div class="form-check form-check-inline">
+        <input
+          class="form-check-input"
+          type="radio"
+          value="MX"
+          [formControl]="radioControl"
+        />
+        <label class="form-check-label" for="inlineRadio1"> Mexico </label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input
+          class="form-check-input"
+          type="radio"
+          value="US"
+          [formControl]="radioControl"
+        />
+        <label class="form-check-label" for="inlineRadio2">
+          United States
+        </label>
+      </div>
+    </div>
+    <div class="col-sm-12 mb-3">
+      <h5>
+        We skim just*
+        <button class="btn btn-light pt-1 btn-sm">
+          <strong>{{ comitionLabel }} {{ comitionCurrency }}</strong>
+        </button>
+        off each transaction and a one-time setup fee. No sneaky charges, no
+        recurring costs. Here's an example:
+      </h5>
+    </div>
+    <div class="col-sm-12">
+      <label for="customRange1" class="form-label"
+        >If one of your products costs:
+        <span class="btn btn-light btn-sm">
+          {{ priceForDisplay | currency : "USD" }} {{ comitionCurrency }}
+        </span></label
+      >
+      <input
+        type="range"
+        class="form-range"
+        [formControl]="inputSlider"
+        [min]="minPrice"
+        [max]="maxPrice"
+        [value]="maxPrice"
+      />
+    </div>
+    <div class="col-sm-12 mb-3">
+      Comition:
+      <span class="btn btn-light btn-sm"
+        >{{ comition | currency : "USD" }} {{ comitionCurrency }}</span
+      >
+      <br />
+      <small class="text-muted"
+        >+ {{ taxTitle }}: {{ taxValue | currency : "USD" }}</small
+      >
+    </div>
+    <div class="col-sm-12">
+      You will receive in your account:
+      <span class="btn btn-light btn-sm"
+        ><strong
+          >{{ total | currency : "USD" }} {{ comitionCurrency }}</strong
+        ></span
+      >
+    </div>
+    <div class="col-sm-12">
+      <small class="text-muted"
+        >*Percentage may vary depending on the type of transaction of your
+        business.</small
+      >
+    </div>
+    <div class="col-sm-12 mt-3">
+      <!-- Button trigger modal -->
+      <button
+        type="button"
+        class="btn btn-light"
+        data-bs-toggle="modal"
+        data-bs-target="#staticBackdrop"
+      >
+        I want my e-commerce!
+      </button>
+    </div>
+  </div>
+</div>
+<div
+  class="modal fade"
+  id="staticBackdrop"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-dark" id="staticBackdropLabel">
+          Get in touch
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body text-dark">
+        <form
+          *ngIf="!isSubmitted"
+          [formGroup]="contactForm"
+          (ngSubmit)="onSubmit()"
+        >
+          <div class="mb-3">
+            <input
+              type="text"
+              class="form-control"
+              [ngClass]="{
+                'is-invalid':
+                  contactForm.get('name')?.touched &&
+                  contactForm.get('name')?.invalid
+              }"
+              formControlName="name"
+              placeholder="What is your name?"
+            />
+            <div
+              *ngIf="contactForm.get('name')?.touched"
+              class="invalid-feedback"
+            >
+              Please enter your name.
+            </div>
+          </div>
+          <div class="mb-3">
+            <input
+              type="email"
+              class="form-control"
+              [ngClass]="{
+                'is-invalid':
+                  contactForm.get('email')?.touched &&
+                  contactForm.get('email')?.invalid
+              }"
+              formControlName="email"
+              placeholder="What is your email?"
+            />
+            <div
+              *ngIf="
+                contactForm.get('email')?.touched &&
+                contactForm.get('email')?.invalid
+              "
+              class="invalid-feedback"
+            >
+              Please enter a valid email address.
+            </div>
+          </div>
+          <div class="mb-3">
+            <input
+              type="tel"
+              class="form-control"
+              [ngClass]="{
+                'is-invalid':
+                  contactForm.get('phone')?.touched &&
+                  contactForm.get('phone')?.invalid
+              }"
+              formControlName="phone"
+              placeholder="What is your phone number?"
+            />
+            <div
+              *ngIf="
+                contactForm.get('phone')?.touched &&
+                contactForm.get('phone')?.invalid
+              "
+              class="invalid-feedback"
+            >
+              Please enter a valid phone number.
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="businessType" class="form-label"
+              >Type of Business</label
+            >
+            <select
+              class="form-select"
+              [ngClass]="{
+                'is-invalid':
+                  contactForm.get('businessType')?.touched &&
+                  contactForm.get('businessType')?.invalid
+              }"
+              id="businessType"
+              formControlName="businessType"
+            >
+              <option selected disabled value="">Choose...</option>
+              <option value="retail">Retail</option>
+              <option value="wholesale">Wholesale</option>
+              <option value="service">Service</option>
+              <option value="manufacturing">Manufacturing</option>
+              <option value="travel_agencies">Travel agencies</option>
+              <option value="food_delivery">Food delivery</option>
+              <option value="fashion_stores">Fashion stores</option>
+              <option value="other">Other store</option>
+            </select>
+            <div
+              *ngIf="
+                contactForm.get('businessType')?.touched &&
+                contactForm.get('businessType')?.invalid
+              "
+              class="invalid-feedback"
+            >
+              Please select a type of business.
+            </div>
+          </div>
+          <div class="mb-3">
+            <textarea
+              class="form-control"
+              [ngClass]="{
+                'is-invalid':
+                  contactForm.get('message')?.touched &&
+                  contactForm.get('message')?.invalid
+              }"
+              formControlName="message"
+              rows="3"
+              placeholder="What do you want to tell us?"
+            ></textarea>
+            <div
+              *ngIf="
+                contactForm.get('message')?.touched &&
+                contactForm.get('message')?.invalid
+              "
+              class="invalid-feedback"
+            >
+              Please enter your message.
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            class="btn btn-dark float-end"
+            [disabled]="isSubmitting || isSubmitted"
+          >
+            <ng-container *ngIf="!isSubmitting && !isSubmitted"
+              >Send my info</ng-container
+            >
+            <ng-container *ngIf="isSubmitting">
+              <span
+                class="spinner-border spinner-border-sm"
+                role="status"
+                aria-hidden="true"
+              ></span>
+              Sending...
+            </ng-container>
+            <ng-container *ngIf="isSubmitted">
+              <span class="bi bi-check-circle-fill"></span>
+              Sent!
+            </ng-container>
+          </button>
+        </form>
+        <div *ngIf="isSubmitted" class="mt-3 text-center">
+          <p>We will be in touch!</p>
+          <button class="btn btn-dark btn-sm" (click)="resetForm()">
+            Send another contact form
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
